@@ -158,15 +158,27 @@ def genRAG_folder(path, modelID, modelName, chunk_size,chunk_overlap):
     open(chroma_db_path + "\info.info", "w", encoding="UTF-8").write(str(payload))
 
 
-chroma_db_path =  os.getenv("CHROMA_PATH") + "/" +  "teste"
-model = "bge-m3"
+
+# Suas pasta com os arquivos
+myDir = "./teste"
+
+# Modelo usado para realizar os embeddings
+model_name = "bge-m3"
+
+# Id para salvar o banco em uma pasta de mesmo nome
+model_id = "bge_teste"
+
+
+chroma_db_path =  os.getenv("CHROMA_PATH") + "/" +  model_name
 
 if not os.path.exists(chroma_db_path):
     os.mkdir(chroma_db_path)
 
-genRAG_folder("C:/Users/t4rci/Downloads/teste", "teste", model, chunk_size=300, chunk_overlap=100)
+# chunk_size define a quantidade de tokens por bloco de texto processado.
+# chunk_overlap adiciona 100 tokens no início e no fim de cada bloco, ajudando a manter a continuidade do contexto.
 
-response = search("teste", "Qual consumo energético?", k=3)
+genRAG_folder(myDir, model_id, model_name , chunk_size=300, chunk_overlap=100)
+response = search(model_id, "Qual consumo energético?", k=3)
 
 
 for item in response:
